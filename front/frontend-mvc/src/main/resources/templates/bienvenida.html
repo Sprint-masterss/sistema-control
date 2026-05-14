@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Bienvenido</title>
+</head>
+<body>
+
+<h1 th:text="'Rol: ' + ${usuario.rol}">Rol: </h1>
+
+<p th:text="'Correo: ' + ${usuario.correoElectronico}"></p>
+
+<a th:href="@{/logout}">Cerrar sesión</a>
+
+</body>
+</html>
