@@ -1,26 +1,26 @@
-
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <title>Inicio de Sesión</title>
+    <title>Login</title>
 </head>
 <body>
 
-<h1>Iniciar sesión</h1>
+<h1>Login</h1>
 
-<p th:if="${error}" style="color:red;" th:text="${error}"></p>
+<form action="/login" method="post">
 
-<form th:action="@{/login}" th:object="${loginDTO}" method="post">
-    <label>Correo:
-        <input type="email" th:field="*{correoElectronico}" required/>
-    </label>
-    <br/>
-    <label>Contraseña:
-        <input type="password" th:field="*{contrasena}" required/>
-    </label>
-    <br/>
-    <button type="submit">Entrar</button>
+    <input type="text"
+           name="correoElectronico"
+           placeholder="Correo">
+
+    <input type="password"
+           name="contrasena"
+           placeholder="Contraseña">
+
+    <button type="submit">
+        Ingresar
+    </button>
+
 </form>
 
 </body>
