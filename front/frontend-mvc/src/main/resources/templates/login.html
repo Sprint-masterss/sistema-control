@@ -7,6 +7,11 @@
 
 <h1>Login</h1>
 
+<p th:if="${param.error}"
+   style="color:red;">
+    Usuario o contraseña incorrectos
+</p>
+
 <form action="/login" method="post">
 
     <input type="text"

@@ -64,7 +64,7 @@ public class LoginController {
 
         } catch (Exception e) {
 
-            return "redirect:/login";
+            return "redirect:/login?error=true";
         }
     }
 
