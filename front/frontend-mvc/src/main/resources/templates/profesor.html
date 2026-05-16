@@ -1,1 +1,84 @@
-<h1>Bienvenido Profesor</h1>
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Profesor</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          th:href="@{/css/styles.css}">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+            Panel Profesor
+        </div>
+
+        <nav>
+
+            <a href="#"
+               class="nav-item active">
+
+                Inicio
+
+            </a>
+
+            <a th:href="@{/logout}"
+               class="nav-item logout">
+
+                Cerrar Sesión
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <h2>
+
+                Hola,
+                <span th:text="${usuario.correoElectronico}">
+                </span>
+
+            </h2>
+
+            <div class="user-pill"
+                 th:text="${usuario.rol}">
+            </div>
+
+        </header>
+
+        <div class="content">
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    Panel Profesor
+                </div>
+
+                <div class="empty-state">
+                    Bienvenido Profesor
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

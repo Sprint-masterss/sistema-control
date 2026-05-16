@@ -6,6 +6,7 @@ import mx.unam.aragon.ico.frontend_mvc.dto.UsuarioDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -69,17 +70,67 @@ public class LoginController {
     }
 
     @GetMapping("/admin")
-    public String admin() {
+    public String admin(HttpSession session, Model model) {
+
+        UsuarioDTO usuario =
+                (UsuarioDTO) session.getAttribute("usuario");
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        if (!usuario.getRol().equalsIgnoreCase("Administrador")) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute("usuario", usuario);
+
         return "admin";
     }
 
     @GetMapping("/alumno")
-    public String alumno() {
+    public String alumno(HttpSession session, Model model) {
+
+        UsuarioDTO usuario =
+                (UsuarioDTO) session.getAttribute("usuario");
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        if (!usuario.getRol().equalsIgnoreCase("Alumno")) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute("usuario", usuario);
+
         return "alumno";
     }
 
     @GetMapping("/profesor")
-    public String profesor() {
+    public String profesor(HttpSession session, Model model) {
+
+        UsuarioDTO usuario =
+                (UsuarioDTO) session.getAttribute("usuario");
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        if (!usuario.getRol().equalsIgnoreCase("Profesor")) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute("usuario", usuario);
+
         return "profesor";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+
+        session.invalidate();
+
+        return "redirect:/login";
     }
 }
