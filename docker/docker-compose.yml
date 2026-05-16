@@ -1,39 +1,55 @@
 services:
-
   mysql:
     image: mysql
     restart: always
     container_name: mysql_sistema
-
     environment:
       MYSQL_ROOT_PASSWORD: Root.123.4
       MYSQL_DATABASE: servicio_social_db
-
     ports:
       - "3306:3306"
-
     volumes:
       - mysql_data:/var/lib/mysql
+      - ../db/servicio_social_db.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-uroot",
+          "-pRoot.123.4",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
   backend-api:
     build: ../back/backend-api
     container_name: backend-api
-
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/servicio_social_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Root.123.4
     ports:
       - "8080:8080"
-
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
+    restart: on-failure
 
   frontend-mvc:
     build: ../front/frontend-mvc
     container_name: frontend-mvc
-
+    environment:
+      API_BASE_URL: http://backend-api:8080
     ports:
       - "8081:8081"
-
     depends_on:
       - backend-api
+    restart: on-failure
 
 volumes:
   mysql_data:
